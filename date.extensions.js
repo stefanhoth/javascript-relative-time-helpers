@@ -30,18 +30,18 @@ Date.prototype.toRelativeTime = function(now_threshold) {
   }
 
   if (delta <= now_threshold) {
-    return 'Just now';
+    return 'Gerade jetzt';
   }
 
   var units = null;
   var conversions = {
-    millisecond: 1, // ms    -> ms
-    second: 1000,   // ms    -> sec
-    minute: 60,     // sec   -> min
-    hour:   60,     // min   -> hour
-    day:    24,     // hour  -> day
-    month:  30,     // day   -> month (roughly)
-    year:   12      // month -> year
+    Millisekunde: 1, // ms    -> ms
+    Sekunde: 1000,   // ms    -> sec
+    Minute: 60,     // sec   -> min
+    Stunde:   60,     // min   -> hour
+    Tag:    24,     // hour  -> day
+    Monat:  30,     // day   -> month (roughly)
+    Jahr:   12      // month -> year
   };
 
   for (var key in conversions) {
@@ -55,8 +55,14 @@ Date.prototype.toRelativeTime = function(now_threshold) {
 
   // pluralize a unit when the difference is greater than 1.
   delta = Math.floor(delta);
-  if (delta !== 1) { units += "s"; }
-  return [delta, units, "ago"].join(" ");
+  if (delta !== 1) { 
+    if(units.charAt(units.length-1) == "e"){
+      units += "n";  
+    }else{
+      units += "en";
+    }
+  }
+  return ["vor",delta, units].join(" ");
 };
 
 /*
